@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "hema993/myntra-web"
         IMAGE_TAG  = "latest"
-        DOCKERHUB_CREDENTIALS = "dockerhub-creds"   // Jenkinsలో add చేసే credentials ID
+        DOCKERHUB_CREDENTIALS = "dockerhub-cred"   // Jenkinsలో add చేసే credentials ID
     }
 
     stages {
