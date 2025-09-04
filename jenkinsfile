@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "your-dockerhub-username/myntra-web"
+        IMAGE_TAG  = "latest"
+        DOCKERHUB_CREDENTIALS = "dockerhub-creds"   // Jenkinsలో add చేసే credentials ID
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/hema993/test.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                }
+            }
+        }
+
+        stage('Push to DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry('', env.DOCKERHUB_CREDENTIALS) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished!"
+        }
+    }
+}
+
