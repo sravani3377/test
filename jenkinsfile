@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "hema993/myntra-web"
+        IMAGE_NAME = "hema84683/myntra-web"
         IMAGE_TAG  = "latest"
         DOCKERHUB_CREDENTIALS = "dockerhub-creds"   // Jenkinsలో add చేసే credentials ID
     }
