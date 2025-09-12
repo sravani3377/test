@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "hema84683/myntra-web"
+        IMAGE_NAME = "asha12345/myntra-web"
         IMAGE_TAG  = "latest"
         DOCKERHUB_CREDENTIALS = "dockerhub-creds"   // Jenkinsలో add చేసే credentials ID
     }
@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/hema993/test.git'
+                    url: 'https://github.com/sravani3377/test.git'
             }
         }
 
