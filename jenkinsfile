@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER       = "asha12345"                
-        IMAGE_NAME           = "${DOCKERHUB_USER}/test"   
-        IMAGE_TAG            = "latest"                   
-        DOCKERHUB_CREDENTIALS = "dockerhub-cred"         
+        DOCKERHUB_USER        = "asha12345"                   
+        IMAGE_NAME            = "${DOCKERHUB_USER}/test"      
+        IMAGE_TAG             = "latest"                      
+        DOCKERHUB_CREDENTIALS = "dockerhub-cred"              
     }
 
     stages {
         stage('Checkout') {
             steps {
-              git branch: 'main'
+                git branch: 'main',
                     url: 'https://github.com/sravani3377/test.git'
             }
         }
@@ -28,9 +28,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()
-                        // Optional: also push "latest" and "build number" tags
-                        dockerImage.push("${env.BUILD_NUMBER}")
+                        dockerImage.push()                          // Push latest
+                        dockerImage.push("${env.BUILD_NUMBER}")     // Push build-number tag
                     }
                 }
             }
@@ -43,5 +42,6 @@ pipeline {
         }
     }
 }
+
 
 
