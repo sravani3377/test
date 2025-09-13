@@ -1,10 +1,11 @@
-# Install Docker
-sudo apt update
-sudo apt install -y docker.io
 
-# Allow Jenkins user to run docker
-sudo usermod -aG docker jenkins
+FROM nginx:alpine
 
-# Restart services
-sudo systemctl restart docker
-sudo systemctl restart jenkins
+
+COPY index.html /usr/share/nginx/html/
+
+
+EXPOSE 80
+
+
+CMD ["nginx", "-g", "daemon off;"]
