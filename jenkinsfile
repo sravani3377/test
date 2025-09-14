@@ -7,8 +7,8 @@ pipeline {
         IMAGE_TAG             = "latest"                      
         DOCKERHUB_CREDENTIALS = "dockerhub-cred"              
         CONTAINER_NAME        = "test-container"
-        HOST_PORT             = "8088"
-        CONTAINER_PORT        = "8088"
+        HOST_PORT             = "8089"
+        CONTAINER_PORT        = "8089"
     }
 
     stages {
@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        stage('Run Container on 8088') {
+        stage('Run Container on 8089') {
             steps {
                 script {
                     // Stop and remove old container if exists
