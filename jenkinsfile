@@ -6,6 +6,9 @@ pipeline {
         IMAGE_NAME            = "${DOCKERHUB_USER}/test"      
         IMAGE_TAG             = "latest"                      
         DOCKERHUB_CREDENTIALS = "dockerhub-cred"              
+        CONTAINER_NAME        = "test-container"
+        HOST_PORT             = "8088"
+        CONTAINER_PORT        = "8088"
     }
 
     stages {
@@ -24,12 +27,27 @@ pipeline {
             }
         }
 
+        stage('Run Container on 8088') {
+            steps {
+                script {
+                    // Stop and remove old container if exists
+                    sh """
+                        docker ps -aq --filter "name=${CONTAINER_NAME}" | grep -q . && docker rm -f ${CONTAINER_NAME} || true
+                    """
+                    // Run new container with port mapping
+                    sh """
+                        docker run -d --name ${CONTAINER_NAME} -p ${HOST_PORT}:${CONTAINER_PORT} ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
         stage('Push to DockerHub') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()                          // Push latest
-                        dockerImage.push("${env.BUILD_NUMBER}")     // Push build-number tag
+                        dockerImage.push()                          
+                        dockerImage.push("${env.BUILD_NUMBER}")     
                     }
                 }
             }
@@ -42,6 +60,4 @@ pipeline {
         }
     }
 }
-
-
 
