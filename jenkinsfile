@@ -7,8 +7,7 @@ pipeline {
         IMAGE_TAG             = "latest"                      
         DOCKERHUB_CREDENTIALS = "dockerhub-cred"              
         CONTAINER_NAME        = "test-container"
-        HOST_PORT             = "8089"
-        CONTAINER_PORT        = "8089"
+        PORT        = "8089"
     }
 
     stages {
